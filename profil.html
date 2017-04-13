@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="boo/css/bootstrap.css">
+	<script src="boo/js/jquery.js"></script> 
+	<script src="boo/js/bootstrap.js"></script>
+
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+	<style type="text/css">
+		h6{
+			margin: 30px;
+			color: grey;
+			line-height: 150%
+		}
+		#k
+		{
+			height: 200px;
+			padding: 20px;
+			border-right: solid 2px #ccc;
+		}
+		#sidebar
+		{
+			background: url(tool2.jpg);
+
+    		background-size: 100% 200px;
+    		height: 200px;
+
+		}
+		#barre
+		{
+			background-color: #ccc;
+			height: 5px;
+		}
+		#corps
+		{
+			margin-top: 50px;
+		}
+		#bar
+		{
+			padding: 20px;
+			border-right: solid 2px #ccc;
+		}
+		label
+		{
+			margin-right: 5px;
+		}
+		#l1,#l2
+		{
+			
+		}
+	</style>
+
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row" id="content">
+			<div class="col-md-3" id="k">
+				<img src="profile.jpg" class="img-circle center-block" height="80px">
+				<h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor</h6>
+			</div>
+			<div class="col-md-9" id="sidebar">
+				
+			</div>
+		</div>
+		<div class="row" id="barre">
+		</div>
+		<div class="row" id="corps">
+			<div class="col-md-3" id="bar">
+				<form action="" method="POST" role="form">
+					<legend>Filtrage</legend>
+
+					<div class="form-group">
+						<label for="">urgence</label>
+						<input checked data-toggle="toggle" type="checkbox" id="urgence">
+					</div>
+					<div class="form-group">
+						<label for="" id="l2">electricien</label>
+						<input checked data-toggle="toggle" type="checkbox" id="metier1">
+					</div>
+					<div class="form-group">
+						<label for="" id="l1">mecanicien</label>
+						<input checked data-toggle="toggle" type="checkbox" onchange="myFunction2()" id="metier2">
+						<p id="dimo"></p>
+					</div>
+
+					<div class="form-group">
+						<label for="">delai</label>
+        
+        <input type="range"  onchange="myFunction()" name="jours" id="delai" value="10" min="0" max="30">
+        <label>jours:<p id="demo"></p></label>
+      
+					</div>
+					
+				</form>
+			</div>
+			<div class="col-md-9" id="liste">
+			
+			</div>
+		</div>		
+
+	</div>
+<script>
+
+function myFunction() {
+    var x = document.getElementById("delai").value;
+    document.getElementById("demo").innerHTML = x;
+    return x;
+}
+	
+$.getJSON('ijrili.php', function(demande) {
+	
+var s="";
+for(i in demande)
+{
+	if (demande[i].verification) {
+		z='class="glyphicon glyphicon-ok "';
+	}
+	else
+	{
+		z='class="glyphicon glyphicon-remove"';
+	}	
+	if ((document.getElementById("metier1").checked==true))
+	{
+		if (demande[i].mitier=="elect") {
+			if ((demande[i].type)&&(document.getElementById("urgence").checked)) {
+				if (myFunction()<=(demande[i].delai)) 
+				{
+				$('<div class="panel-group"><div class="panel panel-danger" id="item'+i+'"><div class="panel-heading"> <h4 class="panel-title"><a data-toggle="collapse" href="#collapse'+i+'"><span '+z+'></span> '+demande[i].mitier+'</a></h4></div><div id="collapse'+i+'" class="panel-collapse collapse"><div class="panel-body" ><p id="bod'+i+'"></p></div></div></div></div>').appendTo("#liste");
+				}
+			}
+			else
+			{
+				if (!demande[i].type)
+				{
+				if (myFunction()<=(demande[i].delai)) 
+				{
+				$('<div class="panel-group"><div class="panel panel-info" id="item'+i+'"><div class="panel-heading"> <h4 class="panel-title"><a data-toggle="collapse" href="#collapse'+i+'"><span '+z+'></span> '+demande[i].mitier+' </a></h4></div><div id="collapse'+i+'" class="panel-collapse collapse"><div class="panel-body" ><p id="bod'+i+'"></p></div></div></div></div>').appendTo("#liste");
+				}
+				}	
+			}
+		}
+	}
+	if ((document.getElementById("metier2").checked==true))
+	{
+		if (demande[i].mitier=="mecan") {
+			if ((demande[i].type)&&(document.getElementById("urgence").checked)) {
+				if (myFunction()<=(demande[i].delai)) 
+				{
+				$('<div class="panel-group"><div class="panel panel-danger" id="item'+i+'"><div class="panel-heading"> <h4 class="panel-title"><a data-toggle="collapse" href="#collapse'+i+'"><span '+z+'></span> '+demande[i].mitier+'</a></h4></div><div id="collapse'+i+'" class="panel-collapse collapse"><div class="panel-body" ><p id="bod'+i+'"></p></div></div></div></div>').appendTo("#liste");
+				}
+			}
+			else
+			{
+				if (!demande[i].type)
+				{
+				if (myFunction()<=(demande[i].delai)) 
+				{
+				$('<div class="panel-group"><div class="panel panel-info" id="item'+i+'"><div class="panel-heading"> <h4 class="panel-title"><a data-toggle="collapse" href="#collapse'+i+'"><span '+z+'></span> '+demande[i].mitier+'</a></h4></div><div id="collapse'+i+'" class="panel-collapse collapse"><div class="panel-body" ><p id="bod'+i+'"></p></div></div></div></div>').appendTo("#liste");
+				}
+				}	
+			}
+		}
+	}     	
+
+s += "<h4>Sujet</h4> " + demande[i].sujet + "<br>";
+s += "<h4>Emplacement</h4> " + demande[i].emplacement + "<br>";
+s += "<h4>Delai</h4> " + demande[i].delai + " jours<br>";
+s+= "<hr>";
+$("#bod"+i).html(s);
+s="";
+}
+
+
+});
+</script>
+</body>
+</html>
